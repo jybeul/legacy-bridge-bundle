@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('legacy_path')
                     ->isRequired()
                     ->validate()
-                        ->ifTrue(function ($path) {
+                        ->ifTrue(function($path) {
                             return !is_readable($path);
                         })
                         ->thenInvalid('The Path "%s" is not readable')

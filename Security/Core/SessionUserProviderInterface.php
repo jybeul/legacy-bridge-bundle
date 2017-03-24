@@ -7,9 +7,9 @@ interface SessionUserProviderInterface
     /**
      * Get username in session.
      *
-     * @param string $id Session ID
+     * @param string $sessionKey Session key
      *
      * @return string|null
      */
-    public function getUsernameFromLegacySession($id);
+    public function getUsernameFromLegacySession($sessionKey);
 }
