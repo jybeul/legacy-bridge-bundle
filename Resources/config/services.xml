@@ -25,5 +25,26 @@
         <service id="jybeul_legacy_bridge.htaccess_handler"
             class="Jybeul\LegacyBridgeBundle\Kernel\HtaccessHandler"
             public="false"/>
+
+        <!-- Security -->
+        <service id="jybeul_legacy_bridge.security.authentication.legacy_provider"
+            class="Jybeul\LegacyBridgeBundle\Security\Core\Authentication\Provider\LegacyProvider"
+            public="false"
+            abstract="true">
+            <argument /> <!-- User Provider -->
+            <argument /> <!-- Legacy Session StorageHandler -->
+        </service>
+
+        <service id="jybeul_legacy_bridge.security.authentication.legacy_listener"
+            class="Jybeul\LegacyBridgeBundle\Security\Http\Firewall\LegacySessionListener"
+            public="false"
+            abstract="true">
+            <argument type="service" id="security.token_storage" />
+            <argument type="service" id="security.authentication.manager" />
+            <argument /> <!-- Legacy Session Cookie name -->
+            <argument /> <!-- User Provider -->
+            <argument /> <!-- User Checker -->
+            <argument /> <!--  Provider Key -->
+        </service>
     </services>
 </container>

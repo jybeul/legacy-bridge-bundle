@@ -11,6 +11,8 @@ If .htaccess files were present at the root of the directory and contained SetEn
 
 Additionally the wrapper injects the symfony DI-Container into `$_SERVER['SYMFONY_CONTAINER']`, so you can slowly refactor the legacy app, by extracting services into symfony services but use them in the legacy code, as well.
 
+Bonus, if your old application did not use php sessions to connect users, it is possible to activate connection listener in your security firewall. However, if your application used sessions php to connect users, then refer to the Symfony documentation to set up a bridge between the two systems (http://symfony.com/doc/current/components/http_foundation/session_php_bridge.html).
+
 Installation
 ------------
 Download the bundle with composer:
@@ -69,6 +71,29 @@ On the legacy app
     /** @var \Symfony\Component\DependencyInjection\ContainerInterface $container */
     $container = $_SERVER['SYMFONY_CONTAINER'];
     $myService = $container->get('my.service.id');
+    
+Legacy connection without PHP session
+-------------------------------------
+
+If your legacy application has an authenticated user system but did not use php sessions.
+You can activate an authentication provider in your firewall.
+ 
+In your security.yml place:
+
+    firewalls:
+         main:
+            ...
+            jybeul_legacy_connection:
+                cookie_name: 'legacy_session_cookie'
+                storage_handler: appbundle.security.session_user_provider
+                
+This provider needs two configuration variables. First, the legacy cookie name which contains a key to get authenticated user. Second, the id of your legacy session storage handler service that will be used to load user. The storage handler service must implement `Jybeul\LegacyBridgeBundle\Security\SessionUserProviderInterface`.
+
+In your AppBundle services.xml
+
+    <service id="appbundle.security.session_user_provider"
+        class="AppBundle\Security\SessionUserProvider">
+    </service>
 
 License
 -------
