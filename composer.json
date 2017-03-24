@@ -1,0 +1,38 @@
+{
+  "name": "jybeul/legacy-bridge-bundle",
+  "type": "symfony-bundle",
+  "description": "This bundle provides a wrapper to encapsulate your old legacy application to Symfony",
+  "keywords": [
+    "symfony",
+    "legacy",
+    "bridge",
+    "wrapper"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jean-Baptiste VILLEMIN",
+      "email": "jybeul@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Jybeul\\LegacyBridgeBundle\\": ""
+    },
+    "exclude-from-classmap": [
+      "Tests/"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Jybeul\\LegacyBridgeBundle\\Tests\\": "Tests/"
+    }
+  },
+  "require": {
+    "php": "^5.5.9|~7.0",
+    "psr/log": "^1.0",
+    "symfony/framework-bundle": "~2.8|~3.0"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
