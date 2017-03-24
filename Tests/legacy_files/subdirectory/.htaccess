@@ -1,0 +1,2 @@
+SetEnv TESTWHO world
+SetEnv TESTWHERE 'my legacy code'
