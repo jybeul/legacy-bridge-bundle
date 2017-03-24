@@ -33,6 +33,20 @@ class Configuration implements ConfigurationInterface
                         ->thenInvalid('The Path "%s" is not readable')
                     ->end()
                 ->end()
+                ->arrayNode('session')
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('cookie_name')
+                            ->isRequired()->cannotBeEmpty()
+                        ->end()
+                        ->scalarNode('storage_handler')
+                            ->isRequired()->cannotBeEmpty()
+                        ->end()
+                        ->scalarNode('login_page')
+                            ->defaultValue('security_login')
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;

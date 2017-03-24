@@ -46,5 +46,15 @@
             <argument /> <!-- User Checker -->
             <argument /> <!--  Provider Key -->
         </service>
+
+        <service id="jybeul_legacy_bridge.security.guard.legacy_authenticator_abstract"
+            class="Jybeul\LegacyBridgeBundle\Security\Guard\LegacyAuthenticator"
+            abstract="true">
+            <argument /> <!-- Legacy Session Cookie name -->
+            <argument /> <!-- Legacy Session StorageHandler -->
+            <argument type="service" id="router"/>
+            <argument /> <!-- Login page -->
+        </service>
+
     </services>
 </container>
