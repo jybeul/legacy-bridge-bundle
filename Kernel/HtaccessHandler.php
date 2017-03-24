@@ -44,7 +44,7 @@ class HtaccessHandler
     /**
      * Read each line from .htaccess file from a directory.
      *
-     * @param string $from
+     * @param string $dir
      *
      * @return array
      */
