@@ -183,19 +183,26 @@ class LegacyKernel implements LoggerAwareInterface, ContainerAwareInterface
         // Be careful, if execution is stopped by legacy code (exit, die...),
         // full process execution is stopped too.
         $responseContent = ob_get_contents();
+
         ob_end_clean();
 
         // Get status code
-        $responseCode = http_response_code();
+        $responseStatus = http_response_code();
+
         // Get headers
-        $responseHeaders = headers_list();
+        // FIX : known issue when xdebug is enable
+        if (function_exists('xdebug_get_headers')) {
+            $responseHeaders = xdebug_get_headers();
+        } else {
+            $responseHeaders = headers_list();
+        }
 
         // Create response
         $response = new Response();
 
         // Set status code
-        if ($responseCode) {
-            $response->setStatusCode($responseCode);
+        if ($responseStatus) {
+            $response->setStatusCode($responseStatus);
         }
 
         // Set headers
@@ -203,6 +210,7 @@ class LegacyKernel implements LoggerAwareInterface, ContainerAwareInterface
             list($headerName, $headerValue) = explode(': ', $header, 2);
             $response->headers->set($headerName, $headerValue);
         }
+
         // Set content
         $response->setContent($responseContent);
 
