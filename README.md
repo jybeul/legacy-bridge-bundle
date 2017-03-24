@@ -76,20 +76,33 @@ Legacy connection without PHP session
 -------------------------------------
 
 If your legacy application has an authenticated user system but did not use php sessions.
-You can activate an authentication provider in your firewall.
+You can activate an authenticator guard provider in your firewall.
  
-In your security.yml place:
+    // app/config/security.yml
 
     firewalls:
          main:
-            ...
-            jybeul_legacy_connection:
-                cookie_name: 'legacy_session_cookie'
-                storage_handler: appbundle.security.session_user_provider
+            guard:
+                authenticators:
+                    - jybeul_legacy_bridge.security.guard.legacy_authenticator
                 
-This provider needs two configuration variables. First, the legacy cookie name which contains a key to get authenticated user. Second, the id of your legacy session storage handler service that will be used to load user. The storage handler service must implement `Jybeul\LegacyBridgeBundle\Security\SessionUserProviderInterface`.
+This provider needs configuration variables.
+ 
+    // app/config/config.yml
+    
+    jybeul_legacy_bridge:
+        legacy_path: '/full/path/to/my/legacy/project/files'
+        session:
+            cookie_name: 'a_cookie_name'    # required
+            storage_handler: 'a_service_id' # required
+            login_page: 'a_route_name'      # optional
+ 
+ The legacy cookie name which contains a key to get authenticated user. 
+ The service id is your legacy session storage handler service that will be used to load user. It must implement `Jybeul\LegacyBridgeBundle\Security\SessionUserProviderInterface`.
 
 In your AppBundle services.xml
+
+    // src/AcmeBundle/Resources/config/services.xml
 
     <service id="appbundle.security.session_user_provider"
         class="AppBundle\Security\SessionUserProvider">
