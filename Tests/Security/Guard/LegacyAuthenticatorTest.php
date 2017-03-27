@@ -89,7 +89,7 @@ class LegacyAuthenticatorTest extends \PHPUnit_Framework_TestCase
             ->with($credentials[$userIdentityField])
             ->willReturn(null);
 
-        $this->expectException(UserNotFoundException::class);
+        $this->setExpectedException(UserNotFoundException::class);
         $this->authenticator->getUser($credentials, $this->getUserProviderMock());
     }
 
