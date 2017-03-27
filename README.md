@@ -1,6 +1,9 @@
 JybeulLegacyBridgeBundle
 =========================
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jybeul/legacy-bridge-bundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jybeul/legacy-bridge-bundle/?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6d665cb91a4e4c699982480243d5309a)](https://www.codacy.com/app/JBV/legacy-bridge-bundle)
+
 What is this?
 -------------
 
