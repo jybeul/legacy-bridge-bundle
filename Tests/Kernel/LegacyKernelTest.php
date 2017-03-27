@@ -230,7 +230,7 @@ class LegacyKernelTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $htaccessHandler = new HtaccessHandler();
-        $this->router = $this->createMock(Router::class);
+        $this->router = $this->createPartialMock(Router::class, ['match']);
         $this->container = new Container();
 
         $this->kernel = new LegacyKernel($this->legacyPath, $htaccessHandler, $this->router);
