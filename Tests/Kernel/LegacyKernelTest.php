@@ -25,7 +25,7 @@ class LegacyKernelTest extends \PHPUnit_Framework_TestCase
     private $router;
 
     /** @var string */
-    private $legacyPath = __DIR__.'/../legacy_files/';
+    private $legacyPath;
 
     /**
      * @test
@@ -38,7 +38,7 @@ class LegacyKernelTest extends \PHPUnit_Framework_TestCase
 
         $request->attributes->remove('legacy_script');
 
-        $this->expectException(\LogicException::class);
+        $this->setExpectedException(\LogicException::class);
         $this->kernel->handle($request);
     }
 
@@ -172,7 +172,7 @@ class LegacyKernelTest extends \PHPUnit_Framework_TestCase
         $script = '404_file.php';
         $request = $this->createRequest($uri, $script);
 
-        $this->expectException(NotFoundHttpException::class);
+        $this->setExpectedException(NotFoundHttpException::class);
         $this->kernel->handle($request);
     }
 
@@ -218,7 +218,7 @@ class LegacyKernelTest extends \PHPUnit_Framework_TestCase
             ->with($potentialUri)
             ->will($this->throwException(new ResourceNotFoundException()));
 
-        $this->expectException(NotFoundHttpException::class);
+        $this->setExpectedException(NotFoundHttpException::class);
         $this->kernel->handle($request);
     }
 
@@ -229,8 +229,15 @@ class LegacyKernelTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        $this->legacyPath = __DIR__.'/../legacy_files/';
+
         $htaccessHandler = new HtaccessHandler();
-        $this->router = $this->createPartialMock(Router::class, ['match']);
+
+        $this->router = $this->getMockBuilder(Router::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['match'])
+            ->getMock();
+
         $this->container = new Container();
 
         $this->kernel = new LegacyKernel($this->legacyPath, $htaccessHandler, $this->router);
